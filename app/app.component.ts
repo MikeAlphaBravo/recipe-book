@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
         <h6>-{{currentRecipe.ingredients}}</h6>
         <h6>-{{currentRecipe.directions}}</h6></h5>
         </div>
-      <div>
+      <div *ngIf="selectedRecipe">
         <h3>{{selectedRecipe.title}}</h3>
         <p>Recipe Made? {{selectedRecipe.made}}</p>
         <h3>Edit Recipe</h3>
@@ -24,6 +24,7 @@ import { Component } from '@angular/core';
         <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="1">1 (Low Rating)<br>
           <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="2">2 (Medium Rating)<br>
           <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="3">3 (High Rating)
+          <button (click)="finishedEditing()">Done</button>
       </div>
   </div>
   `
@@ -40,10 +41,14 @@ export class AppComponent {
     new Recipe("Margarita Pizza", "Basil, Garlic, Tomato, Motz", "Eat the sh*t out of it!", 2),
     new Recipe("French Onion Soup inside Mushoroom Cap", "Mushroom, Butter, Onion, Stock, Cheese", "Do I really need to tell you what to do now?", 1)
   ];
-  selectedRecipe: Recipe = this.recipes[0];
+  selectedRecipe = null;
 
-  editRecipe() {
-    alert("You just almost-editted your recipe!");
+  editRecipe(clickedRecipe) {
+    this.selectedRecipe = clickedRecipe;
+  }
+
+  finishedEditing() {
+    this.selectedRecipe = null;
   }
 
   haveMade(clickedRecipe: Recipe){
