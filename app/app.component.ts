@@ -5,16 +5,26 @@ import { Component } from '@angular/core';
   template: `
   <div class="container">
     <h1>Recipe Book</h1>
-    <h3>{{currentTime}}</h3>
+    <h3>Recipes as of {{currentTime}}</h3>
     <h3>{{currentFocus}}</h3>
     <hr>
-    <form>
       <div>
         <h5 [class]="ratingColor(currentRecipe)" (click)="haveMade(currentRecipe)" *ngFor="let currentRecipe of recipes"><strong>{{currentRecipe.title}} <button (click)="editRecipe(currentRecipe)">Edit!!!</button></strong>
         <h6>-{{currentRecipe.ingredients}}</h6>
         <h6>-{{currentRecipe.directions}}</h6></h5>
         </div>
-    </form>
+      <div>
+        <h3>{{selectedRecipe.title}}</h3>
+        <p>Recipe Made? {{selectedRecipe.made}}</p>
+        <h3>Edit Recipe</h3>
+        <label>Enter Recipe Title:</label>
+        <input [(ngModel)]="selectedRecipe.title">
+        <label>Enter Recipe Rating (1-3)</label>
+        <br>
+        <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="1">1 (Low Rating)<br>
+          <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="2">2 (Medium Rating)<br>
+          <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="3">3 (High Rating)
+      </div>
   </div>
   `
 })
@@ -30,6 +40,7 @@ export class AppComponent {
     new Recipe("Margarita Pizza", "Basil, Garlic, Tomato, Motz", "Eat the sh*t out of it!", 2),
     new Recipe("French Onion Soup inside Mushoroom Cap", "Mushroom, Butter, Onion, Stock, Cheese", "Do I really need to tell you what to do now?", 1)
   ];
+  selectedRecipe: Recipe = this.recipes[0];
 
   editRecipe() {
     alert("You just almost-editted your recipe!");
